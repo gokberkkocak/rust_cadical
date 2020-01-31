@@ -1,0 +1,14 @@
+[package]
+name = "rust-cadical"
+version = "0.1.0"
+authors = ["Gökberk Koçak <gk34@st-andrews.ac.uk>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+bindgen = "0.52.0"
+cc = { version = "1.0.37", features = ["parallel"] } 
+
+[features]
+generate-bindings = [] # feature has no explicit dependencies
