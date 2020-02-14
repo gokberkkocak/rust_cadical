@@ -42,12 +42,24 @@ pub fn run_cadical(s : *mut CCaDiCaL) -> i32 {
     ret
 } 
 
+
+/// Gets a solution from Cadical solver while using the given nb_vars 
+/// to allocate a new Rust solution vec to write and return.
 pub fn get_cadical_solution(s : *mut CCaDiCaL, nb_vars : usize) -> Vec<i32>{
     let mut model : Vec<i32> = Vec::with_capacity(nb_vars);
     for i in 1..nb_vars+1{
         model.push( unsafe { ccadical_val(s, i as i32)}); 
     }
     model
+}
+
+/// Gets a solution from Cadical solver and writes on to the given Vector.
+/// No memory allocation is done here unless the given model has a smaller capacity then the given nb_vars. 
+pub fn get_cadical_solution_no_malloc(s : *mut CCaDiCaL, model : &mut Vec<i32>, nb_vars : usize){
+    model.clear();
+    for i in 1..nb_vars+1{
+        model.push( unsafe { ccadical_val(s, i as i32)}); 
+    }
 }
 
 pub fn get_cadical_solver_stats(s : *mut CCaDiCaL) -> i64{
