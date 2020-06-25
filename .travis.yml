@@ -5,4 +5,5 @@ os:
 rust:
   - stable
 script:
-  - cargo build --features="generate-bindings"
+  - cargo build --verbose
+  - cargo test --verbose
