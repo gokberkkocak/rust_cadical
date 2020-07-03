@@ -5,8 +5,14 @@
 // defining '-DNBUILD'.  Then we try to guess part of the configuration.
 
 #ifndef NBUILD
+#if __GNUC__ > 4
+#if __has_include(<build.hpp>)
 #include <build.hpp>
-#endif
+#endif // __has_include
+#else
+#include <build.hpp>
+#endif // __GNUC > 4
+#endif // NBUILD
 
 /*------------------------------------------------------------------------*/
 
@@ -16,14 +22,18 @@
 // the file '../VERSION' with '../scripts/update-version.sh'.  The standard
 // build process relies on 'VERSION' to be defined in 'build.hpp'.
 
-#  define VERSION "1.2.1"
+#ifndef NBUILD
+#ifndef VERSION
+#  define VERSION "1.3.0"
+#endif // NBUILD
+#endif // VERSION
 
 /*------------------------------------------------------------------------*/
 
 // The copyright of the code is here.
 
 static const char * COPYRIGHT =
-"Copyright (c) 2016-2019 Armin Biere, JKU Linz"
+"Copyright (c) 2016-2020 Armin Biere, JKU Linz"
 ;
 
 /*------------------------------------------------------------------------*/
@@ -67,7 +77,7 @@ static const char * COPYRIGHT =
 // Build Time and operating system.
 //
 #ifndef DATE
-#  define DATE __DATE__ __TIME__
+#  define DATE __DATE__ " " __TIME__
 #endif
 
 /*------------------------------------------------------------------------*/
